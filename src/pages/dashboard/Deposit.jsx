@@ -83,8 +83,8 @@ export function Deposit() {
 
     if (value) {
       const numValue = parseFloat(value);
-      if (numValue < 50) {
-        setError("Minimum deposit is $50");
+      if (numValue < 20) {
+        setError("Minimum deposit is $20");
       } else if (numValue > 1000) {
         setError("Maximum deposit is $1000");
       }
@@ -97,8 +97,8 @@ export function Deposit() {
       return;
     }
 
-    if (!amount || parseFloat(amount) < 50 || parseFloat(amount) > 1000) {
-      setError("Please enter a valid amount between $50 and $1000");
+    if (!amount || parseFloat(amount) < 20 || parseFloat(amount) > 1000) {
+      setError("Please enter a valid amount between $20 and $1000");
       return;
     }
 
@@ -268,12 +268,12 @@ export function Deposit() {
                       placeholder="Enter amount"
                       value={amount}
                       onChange={handleAmountChange}
-                      min="50"
+                      min="20"
                       max="1000"
                       step="0.01"
                     />
                     <p className="text-xs text-muted-foreground">
-                      Minimum: $50 • Maximum: $1000
+                      Minimum: $20 • Maximum: $1000
                     </p>
                   </div>
                 </div>
@@ -431,43 +431,54 @@ export function Deposit() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {mockDepositHistory.map((deposit) => (
-                <div
-                  key={deposit.id}
-                  className="flex items-center justify-between border-b border-border pb-4 last:border-0 last:pb-0"
-                >
-                  <div className="flex items-center gap-4 flex-1">
-                    {getStatusIcon(deposit.status)}
-                    <div className="space-y-1 flex-1">
-                      <div className="flex items-center gap-2">
-                        <p className="text-sm font-medium">
-                          {deposit.amount.toFixed(2)} USD ({deposit.crypto})
+            {mockDepositHistory.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-12 text-center">
+                <History className="h-12 w-12 text-muted-foreground mb-4" />
+                <p className="text-lg font-medium mb-2">No Deposit History</p>
+                <p className="text-sm text-muted-foreground">
+                  You haven't made any deposits yet. Start by making your first
+                  deposit!
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {mockDepositHistory.map((deposit) => (
+                  <div
+                    key={deposit.id}
+                    className="flex items-center justify-between border-b border-border pb-4 last:border-0 last:pb-0"
+                  >
+                    <div className="flex items-center gap-4 flex-1">
+                      {getStatusIcon(deposit.status)}
+                      <div className="space-y-1 flex-1">
+                        <div className="flex items-center gap-2">
+                          <p className="text-sm font-medium">
+                            {deposit.amount.toFixed(2)} USD ({deposit.crypto})
+                          </p>
+                          <span
+                            className={`text-xs px-2 py-0.5 rounded-full ${getStatusColor(
+                              deposit.status
+                            )}`}
+                          >
+                            {deposit.status}
+                          </span>
+                        </div>
+                        <p className="text-xs text-muted-foreground">
+                          {deposit.date} at {deposit.time}
                         </p>
-                        <span
-                          className={`text-xs px-2 py-0.5 rounded-full ${getStatusColor(
-                            deposit.status
-                          )}`}
-                        >
-                          {deposit.status}
-                        </span>
+                        <p className="text-xs text-muted-foreground font-mono">
+                          TX: {deposit.txHash}
+                        </p>
                       </div>
-                      <p className="text-xs text-muted-foreground">
-                        {deposit.date} at {deposit.time}
-                      </p>
-                      <p className="text-xs text-muted-foreground font-mono">
-                        TX: {deposit.txHash}
+                    </div>
+                    <div className="text-right">
+                      <p className="text-lg font-semibold text-green-500">
+                        +${deposit.amount.toFixed(2)}
                       </p>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <p className="text-lg font-semibold text-green-500">
-                      +${deposit.amount.toFixed(2)}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </CardContent>
         </Card>
       )}

@@ -379,12 +379,19 @@ const mockCards = [
   },
 ];
 
+// Mock user balance - in real app, this would come from context/API
+const userBalance = 0;
+
 export function Cards() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleBuyClick = (card) => {
+    // if (userBalance <= 0) {
+    //   alert("Insufficient balance! Please deposit funds to purchase cards.");
+    //   return;
+    // }
     setSelectedCard(card);
     setQuantity(1);
     setIsDialogOpen(true);
@@ -401,11 +408,23 @@ export function Cards() {
       alert("Please enter a valid quantity");
       return;
     }
+
+    const totalPrice = selectedCard.price * quantity;
+
+    if (userBalance < totalPrice) {
+      alert(
+        `Insufficient balance! You need $${totalPrice.toFixed(
+          2
+        )} but only have $${userBalance.toFixed(2)}. Please deposit more funds.`
+      );
+      return;
+    }
+
     // Mock purchase - in real app, this would call an API
     alert(
-      `Purchase successful! ${quantity} x ${selectedCard.name} for $${(
-        selectedCard.price * quantity
-      ).toFixed(2)}`
+      `Purchase successful! ${quantity} x ${
+        selectedCard.name
+      } for $${totalPrice.toFixed(2)}`
     );
     handleCloseDialog();
   };
@@ -501,6 +520,11 @@ export function Cards() {
                 <Button
                   onClick={() => handleBuyClick(card)}
                   className="bg-primary hover:bg-primary/90"
+                  title={
+                    userBalance <= 0
+                      ? "Insufficient balance. Please deposit funds first."
+                      : ""
+                  }
                 >
                   <ShoppingCart className="mr-2 h-4 w-4" />
                   Buy Now
@@ -667,6 +691,25 @@ export function Cards() {
                 </div>
               </div>
 
+              {/* Balance Warning */}
+              {userBalance <= 0 && (
+                <div className="p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
+                  Insufficient balance! Your current balance is $
+                  {userBalance.toFixed(2)}. Please deposit funds to purchase
+                  cards.
+                </div>
+              )}
+
+              {userBalance > 0 &&
+                selectedCard &&
+                userBalance < selectedCard.price * quantity && (
+                  <div className="p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
+                    Insufficient balance! You need $
+                    {(selectedCard.price * quantity).toFixed(2)} but only have $
+                    {userBalance.toFixed(2)}.
+                  </div>
+                )}
+
               {/* Action Buttons */}
               <div className="flex gap-2 pt-4 border-t border-border">
                 <Button
@@ -679,6 +722,11 @@ export function Cards() {
                 <Button
                   onClick={handlePurchase}
                   className="flex-1 bg-primary hover:bg-primary/90"
+                  // disabled={
+                  //   userBalance <= 0 ||
+                  //   (selectedCard &&
+                  //     userBalance < selectedCard.price * quantity)
+                  // }
                 >
                   <ShoppingCart className="mr-2 h-4 w-4" />
                   Purchase

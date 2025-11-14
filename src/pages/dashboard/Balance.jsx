@@ -3,17 +3,13 @@ import { Wallet, TrendingUp, TrendingDown, ArrowUpRight } from "lucide-react";
 
 // Mock data
 const mockBalance = {
-  current: 1250.50,
-  pending: 150.00,
-  totalEarned: 5420.75,
-  totalSpent: 4170.25,
+  current: 0,
+  pending: 0,
+  totalEarned: 0,
+  totalSpent: 0,
 };
 
-const mockTransactions = [
-  { id: 1, type: "deposit", amount: 500.00, date: "2024-01-15", description: "Gift card sale" },
-  { id: 2, type: "withdrawal", amount: -250.00, date: "2024-01-14", description: "Purchase" },
-  { id: 3, type: "deposit", amount: 1000.00, date: "2024-01-13", description: "Gift card sale" },
-];
+const mockTransactions = [];
 
 export function Balance() {
   return (
@@ -75,26 +71,36 @@ export function Balance() {
           <CardDescription>Your latest balance changes</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            {mockTransactions.map((transaction) => (
-              <div
-                key={transaction.id}
-                className="flex items-center justify-between border-b border-border pb-4 last:border-0 last:pb-0"
-              >
-                <div className="space-y-1">
-                  <p className="text-sm font-medium">{transaction.description}</p>
-                  <p className="text-xs text-muted-foreground">{transaction.date}</p>
-                </div>
+          {mockTransactions.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-12 text-center">
+              <Wallet className="h-12 w-12 text-muted-foreground mb-4" />
+              <p className="text-lg font-medium mb-2">No Transactions</p>
+              <p className="text-sm text-muted-foreground">
+                You haven't made any transactions yet. Your transaction history will appear here.
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {mockTransactions.map((transaction) => (
                 <div
-                  className={`text-lg font-semibold ${
-                    transaction.type === "deposit" ? "text-green-500" : "text-red-500"
-                  }`}
+                  key={transaction.id}
+                  className="flex items-center justify-between border-b border-border pb-4 last:border-0 last:pb-0"
                 >
-                  {transaction.type === "deposit" ? "+" : ""}${transaction.amount.toFixed(2)}
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium">{transaction.description}</p>
+                    <p className="text-xs text-muted-foreground">{transaction.date}</p>
+                  </div>
+                  <div
+                    className={`text-lg font-semibold ${
+                      transaction.type === "deposit" ? "text-green-500" : "text-red-500"
+                    }`}
+                  >
+                    {transaction.type === "deposit" ? "+" : ""}${transaction.amount.toFixed(2)}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>

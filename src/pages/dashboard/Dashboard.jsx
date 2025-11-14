@@ -1,11 +1,17 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Wallet, CreditCard, Ticket } from "lucide-react";
 
 // Mock data
 const mockStats = {
-  balance: 1250.50,
-  cards: 8,
-  tickets: 3,
+  balance: 0,
+  cards: 0,
+  tickets: 0,
 };
 
 export function Dashboard() {
@@ -13,7 +19,9 @@ export function Dashboard() {
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-        <p className="text-muted-foreground">Welcome back! Here's your overview.</p>
+        <p className="text-muted-foreground">
+          Welcome back! Here's your overview.
+        </p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -23,7 +31,9 @@ export function Dashboard() {
             <Wallet className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">${mockStats.balance.toFixed(2)}</div>
+            <div className="text-2xl font-bold">
+              ${mockStats.balance.toFixed(2)}
+            </div>
             <p className="text-xs text-muted-foreground">Available funds</p>
           </CardContent>
         </Card>
@@ -46,11 +56,12 @@ export function Dashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{mockStats.tickets}</div>
-            <p className="text-xs text-muted-foreground">Open support tickets</p>
+            <p className="text-xs text-muted-foreground">
+              Open support tickets
+            </p>
           </CardContent>
         </Card>
       </div>
     </div>
   );
 }
-
