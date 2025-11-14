@@ -1,66 +1,71 @@
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Wallet, QrCode, Upload, CheckCircle, Clock, XCircle, History } from "lucide-react";
+import {
+  Wallet,
+  QrCode,
+  Upload,
+  CheckCircle,
+  Clock,
+  XCircle,
+  History,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
+import trcQrCode from "@/assets/trc qr code.jpg";
+import bitcoinQrCode from "@/assets/bitcoin qr.jpg";
 
 // Mock wallet addresses
 const mockWallets = {
-  LiteCoin: {
-    address: "LTC1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfN",
-    network: "Litecoin Mainnet",
-  },
   USDT: {
-    address: "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
-    network: "Ethereum (ERC20)",
+    address: "TA86HPBqaN5Ztys6AJJqyZZJYCw916tGB9",
+    network: "TRC (Tron)",
+    qrCode: trcQrCode,
   },
   Bitcoin: {
-    address: "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfN",
+    address: "12KAfr9wbJpu57q2C4km6xyJMvVaZTMj4F",
     network: "Bitcoin Mainnet",
+    qrCode: bitcoinQrCode,
   },
 };
 
 // Mock deposit history
 const mockDepositHistory = [
-  {
-    id: 1,
-    amount: 500.00,
-    crypto: "USDT",
-    status: "completed",
-    date: "2024-01-15",
-    time: "14:30",
-    txHash: "0x1234...5678",
-  },
-  {
-    id: 2,
-    amount: 250.00,
-    crypto: "Bitcoin",
-    status: "pending",
-    date: "2024-01-14",
-    time: "10:15",
-    txHash: "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfN",
-  },
-  {
-    id: 3,
-    amount: 100.00,
-    crypto: "LiteCoin",
-    status: "completed",
-    date: "2024-01-13",
-    time: "16:45",
-    txHash: "LTC1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfN",
-  },
-  {
-    id: 4,
-    amount: 750.00,
-    crypto: "USDT",
-    status: "failed",
-    date: "2024-01-12",
-    time: "09:20",
-    txHash: "0x9876...5432",
-  },
+  // {
+  //   id: 1,
+  //   amount: 500.0,
+  //   crypto: "USDT",
+  //   status: "completed",
+  //   date: "2024-01-15",
+  //   time: "14:30",
+  //   txHash: "TA86HPBqaN5Ztys6AJJqyZZJYCw916tGB9",
+  // },
+  // {
+  //   id: 2,
+  //   amount: 250.0,
+  //   crypto: "Bitcoin",
+  //   status: "pending",
+  //   date: "2024-01-14",
+  //   time: "10:15",
+  //   txHash: "12KAfr9wbJpu57q2C4km6xyJMvVaZTMj4F",
+  // },
+  // {
+  //   id: 3,
+  //   amount: 750.0,
+  //   crypto: "USDT",
+  //   status: "failed",
+  //   date: "2024-01-12",
+  //   time: "09:20",
+  //   txHash: "TA86HPBqaN5Ztys6AJJqyZZJYCw916tGB9",
+  // },
 ];
 
 export function Deposit() {
@@ -153,7 +158,9 @@ export function Deposit() {
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Deposit</h1>
-        <p className="text-muted-foreground">Add funds to your account using cryptocurrency</p>
+        <p className="text-muted-foreground">
+          Add funds to your account using cryptocurrency
+        </p>
       </div>
 
       {/* Tabs */}
@@ -198,28 +205,16 @@ export function Deposit() {
             <Card>
               <CardHeader>
                 <CardTitle>Select Cryptocurrency</CardTitle>
-                <CardDescription>Choose your preferred payment method</CardDescription>
+                <CardDescription>
+                  Choose your preferred payment method
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                <RadioGroup value={selectedCrypto} onValueChange={setSelectedCrypto}>
-                  <div className="grid gap-4 md:grid-cols-3">
-                    <label
-                      className={cn(
-                        "flex items-center space-x-3 rounded-lg border p-4 cursor-pointer transition-colors",
-                        selectedCrypto === "LiteCoin"
-                          ? "border-primary bg-primary/10"
-                          : "border-border hover:border-primary/50"
-                      )}
-                    >
-                      <RadioGroupItem value="LiteCoin" id="litecoin" />
-                      <div className="flex-1">
-                        <Label htmlFor="litecoin" className="cursor-pointer font-semibold">
-                          LiteCoin
-                        </Label>
-                        <p className="text-xs text-muted-foreground">LTC</p>
-                      </div>
-                    </label>
-
+                <RadioGroup
+                  value={selectedCrypto}
+                  onValueChange={setSelectedCrypto}
+                >
+                  <div className="grid gap-4 md:grid-cols-2">
                     <label
                       className={cn(
                         "flex items-center space-x-3 rounded-lg border p-4 cursor-pointer transition-colors",
@@ -230,10 +225,15 @@ export function Deposit() {
                     >
                       <RadioGroupItem value="USDT" id="usdt" />
                       <div className="flex-1">
-                        <Label htmlFor="usdt" className="cursor-pointer font-semibold">
+                        <Label
+                          htmlFor="usdt"
+                          className="cursor-pointer font-semibold"
+                        >
                           USDT
                         </Label>
-                        <p className="text-xs text-muted-foreground">Tether</p>
+                        <p className="text-xs text-muted-foreground">
+                          TRC (Tron)
+                        </p>
                       </div>
                     </label>
 
@@ -247,7 +247,10 @@ export function Deposit() {
                     >
                       <RadioGroupItem value="Bitcoin" id="bitcoin" />
                       <div className="flex-1">
-                        <Label htmlFor="bitcoin" className="cursor-pointer font-semibold">
+                        <Label
+                          htmlFor="bitcoin"
+                          className="cursor-pointer font-semibold"
+                        >
                           Bitcoin
                         </Label>
                         <p className="text-xs text-muted-foreground">BTC</p>
@@ -297,7 +300,8 @@ export function Deposit() {
               <CardHeader>
                 <CardTitle>Complete Payment</CardTitle>
                 <CardDescription>
-                  Send {amount} USD worth of {selectedCrypto} to the address below
+                  Send {amount} USD worth of {selectedCrypto} to the address
+                  below
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -314,7 +318,9 @@ export function Deposit() {
                         variant="outline"
                         size="sm"
                         onClick={() => {
-                          navigator.clipboard.writeText(mockWallets[selectedCrypto].address);
+                          navigator.clipboard.writeText(
+                            mockWallets[selectedCrypto].address
+                          );
                           alert("Address copied to clipboard!");
                         }}
                       >
@@ -332,13 +338,23 @@ export function Deposit() {
 
                   <div className="space-y-2">
                     <Label>Amount</Label>
-                    <p className="text-lg font-semibold">${parseFloat(amount).toFixed(2)}</p>
+                    <p className="text-lg font-semibold">
+                      ${parseFloat(amount).toFixed(2)}
+                    </p>
                   </div>
 
-                  {/* QR Code Placeholder */}
+                  {/* QR Code */}
                   <div className="flex justify-center p-6 bg-muted rounded-lg">
                     <div className="space-y-4 text-center">
-                      <QrCode className="h-32 w-32 mx-auto text-muted-foreground" />
+                      {mockWallets[selectedCrypto].qrCode ? (
+                        <img
+                          src={mockWallets[selectedCrypto].qrCode}
+                          alt={`${selectedCrypto} QR Code`}
+                          className="h-64 w-64 mx-auto rounded-lg border border-border"
+                        />
+                      ) : (
+                        <QrCode className="h-32 w-32 mx-auto text-muted-foreground" />
+                      )}
                       <p className="text-sm text-muted-foreground">
                         Scan QR code to pay with {selectedCrypto}
                       </p>
@@ -348,7 +364,9 @@ export function Deposit() {
 
                 <div className="space-y-4 pt-4 border-t border-border">
                   <div className="space-y-2">
-                    <Label htmlFor="screenshot">Upload Payment Screenshot</Label>
+                    <Label htmlFor="screenshot">
+                      Upload Payment Screenshot
+                    </Label>
                     <div className="flex items-center gap-4">
                       <Input
                         id="screenshot"
@@ -364,7 +382,8 @@ export function Deposit() {
                       )}
                     </div>
                     <p className="text-xs text-muted-foreground">
-                      Please upload a screenshot of your transaction confirmation
+                      Please upload a screenshot of your transaction
+                      confirmation
                     </p>
                   </div>
 
@@ -407,7 +426,9 @@ export function Deposit() {
         <Card>
           <CardHeader>
             <CardTitle>Deposit History</CardTitle>
-            <CardDescription>View all your deposit transactions</CardDescription>
+            <CardDescription>
+              View all your deposit transactions
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -453,4 +474,3 @@ export function Deposit() {
     </div>
   );
 }
-

@@ -13,6 +13,16 @@ import { MyProfile } from "@/pages/dashboard/MyProfile";
 import { ChangePassword } from "@/pages/dashboard/ChangePassword";
 import { Transactions } from "@/pages/dashboard/Transactions";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { AdminLogin } from "@/pages/admin/AdminLogin";
+import { AdminLayout } from "@/components/AdminLayout";
+import { AdminDashboard } from "@/pages/admin/AdminDashboard";
+import { Users } from "@/pages/admin/Users";
+import { Deposits } from "@/pages/admin/Deposits";
+import { Cards as AdminCards } from "@/pages/admin/Cards";
+import { Transactions as AdminTransactions } from "@/pages/admin/Transactions";
+import { Tickets as AdminTickets } from "@/pages/admin/Tickets";
+import { Settings } from "@/pages/admin/Settings";
+import { AdminProtectedRoute } from "@/components/AdminProtectedRoute";
 
 function App() {
   return (
@@ -111,6 +121,80 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        {/* Admin Routes */}
+        <Route path="/admin-panel/login" element={<AdminLogin />} />
+        <Route
+          path="/admin-panel/dashboard"
+          element={
+            <AdminProtectedRoute>
+              <AdminLayout>
+                <AdminDashboard />
+              </AdminLayout>
+            </AdminProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin-panel/users"
+          element={
+            <AdminProtectedRoute>
+              <AdminLayout>
+                <Users />
+              </AdminLayout>
+            </AdminProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin-panel/deposits"
+          element={
+            <AdminProtectedRoute>
+              <AdminLayout>
+                <Deposits />
+              </AdminLayout>
+            </AdminProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin-panel/cards"
+          element={
+            <AdminProtectedRoute>
+              <AdminLayout>
+                <AdminCards />
+              </AdminLayout>
+            </AdminProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin-panel/transactions"
+          element={
+            <AdminProtectedRoute>
+              <AdminLayout>
+                <AdminTransactions />
+              </AdminLayout>
+            </AdminProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin-panel/tickets"
+          element={
+            <AdminProtectedRoute>
+              <AdminLayout>
+                <AdminTickets />
+              </AdminLayout>
+            </AdminProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin-panel/settings"
+          element={
+            <AdminProtectedRoute>
+              <AdminLayout>
+                <Settings />
+              </AdminLayout>
+            </AdminProtectedRoute>
+          }
+        />
+
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

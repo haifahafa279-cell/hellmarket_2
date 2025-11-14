@@ -1,29 +1,48 @@
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { CreditCard, Star, ShoppingCart, X } from "lucide-react";
 import americanExpressGold from "@/assets/american_express_gold.png";
 import americanExpressGreen from "@/assets/american_express_green.png";
 import americanSilver from "@/assets/american_silver.png";
 import discover from "@/assets/discover.png";
+import discover2 from "@/assets/discover_2.png";
+import dinnerClub from "@/assets/dinner_club.png";
 import visaClassic from "@/assets/visa_classic.png";
+import visaGold from "@/assets/visa_gold.png";
 import visaInfinite from "@/assets/visa_infinite.png";
 import visaPlatinum from "@/assets/visa_platinum.png";
 import visaSignature from "@/assets/visa_signature.png";
+import masterPlatinum from "@/assets/master_platinum.png";
+import masterStandard from "@/assets/master_standard.png";
+import masterWorldCard from "@/assets/master_world_card.png";
+import masterWorldElite from "@/assets/master_world_elite.png";
 
 // Mock data for cards
 const mockCards = [
   {
     id: 1,
-    name: "American Express GOLD CARD",
+    name: "American Express",
     image: americanExpressGold,
     rating: 4.8,
     buyers: 157800,
     available: "100k+",
-    price: 250.00,
+    price: 250.0,
     for: "GOLD CARD",
     balance: "$2.5k+ USD",
     type: "Credit Card",
@@ -37,14 +56,14 @@ const mockCards = [
   },
   {
     id: 2,
-    name: "American Express GREEN CARD",
+    name: "American Express",
     image: americanExpressGreen,
-    rating: 4.7,
-    buyers: 142300,
-    available: "95k+",
-    price: 150.00,
+    rating: 4.8,
+    buyers: 119900,
+    available: "100k+",
+    price: 150.0,
     for: "GREEN CARD",
-    balance: "$1.8k+ USD",
+    balance: "$1.5k+ USD",
     type: "Credit Card",
     holderName: "Available",
     countryCityZip: "Available",
@@ -56,14 +75,14 @@ const mockCards = [
   },
   {
     id: 3,
-    name: "American Express SILVER",
+    name: "American Express",
     image: americanSilver,
-    rating: 4.6,
-    buyers: 128500,
-    available: "85k+",
-    price: 180.00,
-    for: "SILVER CARD",
-    balance: "$2.0k+ USD",
+    rating: 4.9,
+    buyers: 85200,
+    available: "100k+",
+    price: 100.0,
+    for: "PLATINUM CARD",
+    balance: "$1.0k+ USD",
     type: "Credit Card",
     holderName: "Available",
     countryCityZip: "Available",
@@ -75,14 +94,14 @@ const mockCards = [
   },
   {
     id: 4,
-    name: "Visa Classic",
-    image: visaClassic,
-    rating: 4.5,
-    buyers: 198200,
-    available: "120k+",
-    price: 120.00,
-    for: "CLASSIC CARD",
-    balance: "$1.5k+ USD",
+    name: "Visa Platinum",
+    image: visaPlatinum,
+    rating: 4.6,
+    buyers: 112900,
+    available: "100k+",
+    price: 50.0,
+    for: "For TIKTOK",
+    balance: "$500+ USD",
     type: "Credit Card",
     holderName: "Available",
     countryCityZip: "Available",
@@ -96,12 +115,12 @@ const mockCards = [
     id: 5,
     name: "Visa Platinum",
     image: visaPlatinum,
-    rating: 4.9,
-    buyers: 175600,
-    available: "110k+",
-    price: 300.00,
-    for: "PLATINUM CARD",
-    balance: "$3.5k+ USD",
+    rating: 4.8,
+    buyers: 174600,
+    available: "100k+",
+    price: 50.0,
+    for: "For PUBG",
+    balance: "$500+ USD",
     type: "Credit Card",
     holderName: "Available",
     countryCityZip: "Available",
@@ -113,14 +132,14 @@ const mockCards = [
   },
   {
     id: 6,
-    name: "Visa Signature",
-    image: visaSignature,
+    name: "Visa Platinum",
+    image: visaPlatinum,
     rating: 4.8,
-    buyers: 165400,
-    available: "105k+",
-    price: 280.00,
-    for: "SIGNATURE CARD",
-    balance: "$3.2k+ USD",
+    buyers: 110900,
+    available: "100k+",
+    price: 50.0,
+    for: "For PLAYSTORE REDEEM",
+    balance: "$500+ USD",
     type: "Credit Card",
     holderName: "Available",
     countryCityZip: "Available",
@@ -132,14 +151,14 @@ const mockCards = [
   },
   {
     id: 7,
-    name: "Visa Infinite",
-    image: visaInfinite,
-    rating: 5.0,
-    buyers: 145800,
-    available: "98k+",
-    price: 350.00,
-    for: "INFINITE CARD",
-    balance: "$4.0k+ USD",
+    name: "Visa Classic",
+    image: visaClassic,
+    rating: 4.8,
+    buyers: 194400,
+    available: "100k+",
+    price: 30.0,
+    for: "30$",
+    balance: "$30+ USD",
     type: "Credit Card",
     holderName: "Available",
     countryCityZip: "Available",
@@ -151,14 +170,204 @@ const mockCards = [
   },
   {
     id: 8,
-    name: "Discover",
-    image: discover,
+    name: "Visa Platinum",
+    image: visaPlatinum,
     rating: 4.7,
     buyers: 112300,
-    available: "75k+",
-    price: 200.00,
-    for: "DISCOVER CARD",
-    balance: "$2.2k+ USD",
+    available: "100k+",
+    price: 50.0,
+    for: "50$",
+    balance: "$50+ USD",
+    type: "Credit Card",
+    holderName: "Available",
+    countryCityZip: "Available",
+    address: "Available",
+    phoneEmail: "Available",
+    dob: "Available",
+    ssn: "Available",
+    refund: "Available",
+  },
+  {
+    id: 9,
+    name: "Visa Gold",
+    image: visaGold,
+    rating: 4.6,
+    buyers: 87000,
+    available: "100k+",
+    price: 100.0,
+    for: "100$",
+    balance: "$100+ USD",
+    type: "Credit Card",
+    holderName: "Available",
+    countryCityZip: "Available",
+    address: "Available",
+    phoneEmail: "Available",
+    dob: "Available",
+    ssn: "Available",
+    refund: "Available",
+  },
+  {
+    id: 10,
+    name: "Visa Signature",
+    image: visaSignature,
+    rating: 4.9,
+    buyers: 155100,
+    available: "100k+",
+    price: 30.0,
+    for: "30$",
+    balance: "$30+ USD",
+    type: "Credit Card",
+    holderName: "Available",
+    countryCityZip: "Available",
+    address: "Available",
+    phoneEmail: "Available",
+    dob: "Available",
+    ssn: "Available",
+    refund: "Available",
+  },
+  {
+    id: 11,
+    name: "Visa Infinite",
+    image: visaInfinite,
+    rating: 4.5,
+    buyers: 106200,
+    available: "100k+",
+    price: 80.0,
+    for: "80$",
+    balance: "$80+ USD",
+    type: "Credit Card",
+    holderName: "Available",
+    countryCityZip: "Available",
+    address: "Available",
+    phoneEmail: "Available",
+    dob: "Available",
+    ssn: "Available",
+    refund: "Available",
+  },
+  {
+    id: 12,
+    name: "Discover",
+    image: discover,
+    rating: 4.6,
+    buyers: 178500,
+    available: "100k+",
+    price: 50.0,
+    for: "MILES CARD",
+    balance: "$500+ USD",
+    type: "Credit Card",
+    holderName: "Available",
+    countryCityZip: "Available",
+    address: "Available",
+    phoneEmail: "Available",
+    dob: "Available",
+    ssn: "Available",
+    refund: "Available",
+  },
+  {
+    id: 13,
+    name: "Discover",
+    image: discover2,
+    rating: 4.6,
+    buyers: 169600,
+    available: "100k+",
+    price: 100.0,
+    for: "PRIDE CARD",
+    balance: "$1.0k+ USD",
+    type: "Credit Card",
+    holderName: "Available",
+    countryCityZip: "Available",
+    address: "Available",
+    phoneEmail: "Available",
+    dob: "Available",
+    ssn: "Available",
+    refund: "Available",
+  },
+  {
+    id: 14,
+    name: "Dinners Club",
+    image: dinnerClub,
+    rating: 4.7,
+    buyers: 106600,
+    available: "100k+",
+    price: 150.0,
+    for: "INTERNATIONAL CARD",
+    balance: "$1.5k+ USD",
+    type: "Credit Card",
+    holderName: "Available",
+    countryCityZip: "Available",
+    address: "Available",
+    phoneEmail: "Available",
+    dob: "Available",
+    ssn: "Available",
+    refund: "Available",
+  },
+  {
+    id: 15,
+    name: "MasterCard",
+    image: masterPlatinum,
+    rating: 4.7,
+    buyers: 135600,
+    available: "25k+",
+    price: 50.0,
+    for: "PLATINUM CARD",
+    balance: "$500+ USD",
+    type: "Credit Card",
+    holderName: "Available",
+    countryCityZip: "Available",
+    address: "Available",
+    phoneEmail: "Available",
+    dob: "Available",
+    ssn: "Available",
+    refund: "Available",
+  },
+  {
+    id: 16,
+    name: "MasterCard",
+    image: masterStandard,
+    rating: 4.7,
+    buyers: 184600,
+    available: "200k+",
+    price: 100.0,
+    for: "STANDARD CARD",
+    balance: "$1.0k+ USD",
+    type: "Credit Card",
+    holderName: "Available",
+    countryCityZip: "Available",
+    address: "Available",
+    phoneEmail: "Available",
+    dob: "Available",
+    ssn: "Available",
+    refund: "Available",
+  },
+  {
+    id: 17,
+    name: "MasterCard",
+    image: masterWorldCard,
+    rating: 4.7,
+    buyers: 134800,
+    available: "25k+",
+    price: 150.0,
+    for: "WORLD CARD",
+    balance: "$1.5k+ USD",
+    type: "Credit Card",
+    holderName: "Available",
+    countryCityZip: "Available",
+    address: "Available",
+    phoneEmail: "Available",
+    dob: "Available",
+    ssn: "Available",
+    refund: "Available",
+  },
+  {
+    id: 18,
+    name: "MasterCard",
+    image: masterWorldElite,
+    rating: 4.8,
+    buyers: 127700,
+    available: "25k+",
+    price: 200.0,
+    for: "WORLD ELITE CARD",
+    balance: "$2.0k+ USD",
     type: "Credit Card",
     holderName: "Available",
     countryCityZip: "Available",
@@ -193,27 +402,12 @@ export function Cards() {
       return;
     }
     // Mock purchase - in real app, this would call an API
-    alert(`Purchase successful! ${quantity} x ${selectedCard.name} for $${(selectedCard.price * quantity).toFixed(2)}`);
+    alert(
+      `Purchase successful! ${quantity} x ${selectedCard.name} for $${(
+        selectedCard.price * quantity
+      ).toFixed(2)}`
+    );
     handleCloseDialog();
-  };
-
-  const renderStars = (rating) => {
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 !== 0;
-    const stars = [];
-
-    for (let i = 0; i < fullStars; i++) {
-      stars.push(<Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />);
-    }
-    if (hasHalfStar) {
-      stars.push(<Star key="half" className="h-4 w-4 fill-yellow-400/50 text-yellow-400" />);
-    }
-    const emptyStars = 5 - Math.ceil(rating);
-    for (let i = 0; i < emptyStars; i++) {
-      stars.push(<Star key={`empty-${i}`} className="h-4 w-4 text-muted-foreground" />);
-    }
-
-    return stars;
   };
 
   const formatBuyers = (num) => {
@@ -225,16 +419,50 @@ export function Cards() {
     return num.toString();
   };
 
+  const renderRatingStars = (rating) => {
+    const stars = [];
+    const fullStars = Math.floor(rating);
+    const remainder = rating % 1;
+
+    for (let i = 0; i < 5; i++) {
+      if (i < fullStars) {
+        stars.push(
+          <span key={i} className="text-yellow-400 text-sm">
+            ★
+          </span>
+        );
+      } else if (i === fullStars && remainder >= 0.5) {
+        stars.push(
+          <span key={i} className="text-yellow-400 text-sm">
+            ★
+          </span>
+        );
+      } else {
+        stars.push(
+          <span key={i} className="text-muted-foreground/30 text-sm">
+            ★
+          </span>
+        );
+      }
+    }
+    return <div className="flex items-center gap-0.5">{stars}</div>;
+  };
+
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Credit Cards</h1>
-        <p className="text-muted-foreground">Browse and purchase premium credit cards</p>
+        <p className="text-muted-foreground">
+          Browse and purchase premium credit cards
+        </p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {mockCards.map((card) => (
-          <Card key={card.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+          <Card
+            key={card.id}
+            className="overflow-hidden hover:shadow-lg transition-shadow"
+          >
             <div className="relative">
               <img
                 src={card.image}
@@ -249,9 +477,12 @@ export function Cards() {
             </div>
             <CardHeader>
               <CardTitle className="text-lg">{card.name}</CardTitle>
-              <div className="flex items-center gap-1 mt-2">
-                {renderStars(card.rating)}
-                <span className="text-sm text-muted-foreground ml-1">
+              <CardDescription className="text-sm font-medium text-foreground mt-1">
+                {card.for}
+              </CardDescription>
+              <div className="flex items-center gap-2 mt-2">
+                {renderRatingStars(card.rating)}
+                <span className="text-sm text-muted-foreground">
                   ({card.rating})
                 </span>
               </div>
@@ -285,7 +516,9 @@ export function Cards() {
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Card Details</DialogTitle>
-            <DialogDescription>Review the card information before purchasing</DialogDescription>
+            <DialogDescription>
+              Review the card information before purchasing
+            </DialogDescription>
           </DialogHeader>
 
           {selectedCard && (
@@ -306,7 +539,9 @@ export function Cards() {
                     <span className="text-lg">💬</span>
                     <div>
                       <p className="text-sm font-medium">For:</p>
-                      <p className="text-sm text-muted-foreground">{selectedCard.for}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {selectedCard.for}
+                      </p>
                     </div>
                   </div>
 
@@ -314,7 +549,9 @@ export function Cards() {
                     <span className="text-lg">💰</span>
                     <div>
                       <p className="text-sm font-medium">Price:</p>
-                      <p className="text-sm text-muted-foreground">${selectedCard.price.toFixed(2)}</p>
+                      <p className="text-sm text-muted-foreground">
+                        ${selectedCard.price.toFixed(2)}
+                      </p>
                     </div>
                   </div>
 
@@ -322,7 +559,9 @@ export function Cards() {
                     <span className="text-lg">💼</span>
                     <div>
                       <p className="text-sm font-medium">Balance:</p>
-                      <p className="text-sm text-muted-foreground">{selectedCard.balance}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {selectedCard.balance}
+                      </p>
                     </div>
                   </div>
 
@@ -330,7 +569,9 @@ export function Cards() {
                     <span className="text-lg">💳</span>
                     <div>
                       <p className="text-sm font-medium">Type:</p>
-                      <p className="text-sm text-muted-foreground">{selectedCard.type}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {selectedCard.type}
+                      </p>
                     </div>
                   </div>
 
@@ -338,7 +579,9 @@ export function Cards() {
                     <span className="text-lg">👤</span>
                     <div>
                       <p className="text-sm font-medium">Holder Name:</p>
-                      <p className="text-sm text-muted-foreground">{selectedCard.holderName}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {selectedCard.holderName}
+                      </p>
                     </div>
                   </div>
 
@@ -346,7 +589,9 @@ export function Cards() {
                     <span className="text-lg">🌍</span>
                     <div>
                       <p className="text-sm font-medium">Country/City/Zip:</p>
-                      <p className="text-sm text-muted-foreground">{selectedCard.countryCityZip}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {selectedCard.countryCityZip}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -356,7 +601,9 @@ export function Cards() {
                     <span className="text-lg">🏠</span>
                     <div>
                       <p className="text-sm font-medium">Address:</p>
-                      <p className="text-sm text-muted-foreground">{selectedCard.address}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {selectedCard.address}
+                      </p>
                     </div>
                   </div>
 
@@ -364,7 +611,9 @@ export function Cards() {
                     <span className="text-lg">📞</span>
                     <div>
                       <p className="text-sm font-medium">Phone/Email:</p>
-                      <p className="text-sm text-muted-foreground">{selectedCard.phoneEmail}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {selectedCard.phoneEmail}
+                      </p>
                     </div>
                   </div>
 
@@ -372,7 +621,9 @@ export function Cards() {
                     <span className="text-lg">🎂</span>
                     <div>
                       <p className="text-sm font-medium">DOB:</p>
-                      <p className="text-sm text-muted-foreground">{selectedCard.dob}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {selectedCard.dob}
+                      </p>
                     </div>
                   </div>
 
@@ -380,7 +631,9 @@ export function Cards() {
                     <span className="text-lg">🛡️</span>
                     <div>
                       <p className="text-sm font-medium">SSN:</p>
-                      <p className="text-sm text-muted-foreground">{selectedCard.ssn}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {selectedCard.ssn}
+                      </p>
                     </div>
                   </div>
 
@@ -388,7 +641,9 @@ export function Cards() {
                     <span className="text-lg">🔁</span>
                     <div>
                       <p className="text-sm font-medium">Refund:</p>
-                      <p className="text-sm text-muted-foreground">{selectedCard.refund}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {selectedCard.refund}
+                      </p>
                     </div>
                   </div>
                 </div>
